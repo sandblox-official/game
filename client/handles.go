@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"github.com/gorilla/websocket"
-	"github.com/sandblox-official/structures"
+	"github.com/sandblox-official/game/structures"
 )
 
 //HandleMessages ...
