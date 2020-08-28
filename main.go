@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"github.com/gorilla/websocket"
-	"github.com/sandblox-official/game/client"
 	"github.com/sandblox-official/game/server"
 )
 
@@ -24,7 +23,7 @@ func main() {
 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) { server.HandleConnections(w, r, clients, broadcast) })
 
 	// Start listening for incoming chat messages
-	go client.HandleMessages(clients, broadcast)
+	go server.HandleMessages(clients, broadcast)
 
 	// Start the server on localhost port 8000 and log any errors
 	log.Println("http server started on :8000")

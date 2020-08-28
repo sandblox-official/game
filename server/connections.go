@@ -7,12 +7,6 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-type Message struct {
-	Email    string `json:"email"`
-	Username string `json:"username"`
-	Message  string `json:"message"`
-}
-
 //HandleConnections ...
 func HandleConnections(w http.ResponseWriter, r *http.Request, clients map[*websocket.Conn]bool, broadcast chan Message) {
 	var upgrader = websocket.Upgrader{
