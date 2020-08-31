@@ -35,6 +35,7 @@ type World struct {
 
 //Client ...
 type Client struct {
+	ID    int
 	World *World
 	Conn  *websocket.Conn
 	Send  chan []byte
