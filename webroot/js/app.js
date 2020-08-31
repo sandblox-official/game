@@ -1,6 +1,7 @@
 window.onload =()=> {
+    var host = location.host;
     let log = document.getElementsByClassName(`log`)[0];
-    log.innerHTML = "Welcome<b>";
+    log.innerHTML = "Welcome<br>";
 
     let btns = document.getElementsByTagName("button");
     let ConnWorld1 = btns[0];
@@ -8,13 +9,13 @@ window.onload =()=> {
     let SendData = btns[2];
     var conn;
     ConnWorld1.addEventListener(`click`, (e)=>{
-        conn = new WebSocket("ws://localhost:8888/test1");
+        conn = new WebSocket("ws://"+host+"/test1");
         conn.onmessage =(e)=>{
             log.innerHTML += e.data+`</br>`;
         }
     })
     ConnWorld2.addEventListener(`click`, (e)=>{
-        conn = new WebSocket("ws://localhost:8888/test2");
+        conn = new WebSocket("ws://"+host+"/test2");
         conn.onmessage =(e)=>{
             log.innerHTML += e.data+`</br>`;
         }

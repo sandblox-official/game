@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/websocket"
 	"github.com/sandblox-official/game/server"
@@ -30,8 +31,11 @@ func main() {
 		serveWs(worlds["test2"], w, r)
 	})
 	//Serve and Run Worlds
-
-	err := http.ListenAndServe(":8888", nil)
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	err := http.ListenAndServe(":"+port, nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
