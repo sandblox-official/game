@@ -3,14 +3,19 @@ package main
 import (
 	"encoding/json"
 	"log"
+	"net/http"
 
 	"github.com/sandblox-official/game/server"
 )
 
 func main() {
-	port := ":8080"
+	//Set Port
+	port := "8080"
 	log.Println("Server started at", port)
 
+	//Serve Static Files
+	http.Handle("/", http.FileServer(http.Dir("webroot")))
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 	//Process Request
 	reqString := `{"method":"play"}`
 	var req server.Request
