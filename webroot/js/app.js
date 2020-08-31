@@ -9,13 +9,13 @@ window.onload =()=> {
     let SendData = btns[2];
     var conn;
     ConnWorld1.addEventListener(`click`, (e)=>{
-        conn = new WebSocket("ws://"+host+"/test1");
+        conn = new WebSocket("wss://"+host+"/test1");
         conn.onmessage =(e)=>{
             log.innerHTML += e.data+`</br>`;
         }
     })
     ConnWorld2.addEventListener(`click`, (e)=>{
-        conn = new WebSocket("ws://"+host+"/test2");
+        conn = new WebSocket("wss://"+host+"/test2");
         conn.onmessage =(e)=>{
             log.innerHTML += e.data+`</br>`;
         }
