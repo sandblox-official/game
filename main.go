@@ -14,7 +14,8 @@ var (
 		ReadBufferSize:  1024,
 		WriteBufferSize: 1024,
 	}
-	uid = 1
+	uid       = 1
+	activeIPs = []string{}
 )
 
 func main() {
@@ -26,15 +27,32 @@ func main() {
 	worlds["test1"] = server.CreateWorld()
 	go worlds["test1"].Run()
 	http.HandleFunc("/test1", func(w http.ResponseWriter, r *http.Request) {
-		log.Println("Client [", GetIP(r), "] [ 1 /", uid, "] connected to world 1")
-		serveWs(worlds["test1"], w, r)
-		uid++
+		ip := GetIP(r)
+		for _, tmpIP := range activeIPs {
+			if tmpIP == ip {
+				log.Println("Client", ip, "'s connection has been rejected")
+				w.Write([]byte("IP Already in use"))
+			} else {
+				log.Println("Client [", ip, "] [ 1 /", uid, "] connected to world 1")
+				serveWs(worlds["test1"], w, r)
+				uid++
+			}
+		}
 	})
 	worlds["test2"] = server.CreateWorld()
 	go worlds["test2"].Run()
 	http.HandleFunc("/test2", func(w http.ResponseWriter, r *http.Request) {
-		log.Println("Client [", GetIP(r), "] [ 1 /", uid, "] connected to world 2")
-		serveWs(worlds["test2"], w, r)
+		ip := GetIP(r)
+		for _, tmpIP := range activeIPs {
+			if tmpIP == ip {
+				log.Println("Client", ip, "'s connection has been rejected")
+				w.Write([]byte("IP Already in use"))
+			} else {
+				log.Println("Client [", ip, "] [ 1 /", uid, "] connected to world 2")
+				serveWs(worlds["test2"], w, r)
+				uid++
+			}
+		}
 	})
 	//Serve and Run Worlds
 	port := os.Getenv("PORT")
