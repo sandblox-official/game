@@ -9,10 +9,13 @@ import (
 	"github.com/sandblox-official/game/server"
 )
 
-var upgrader = websocket.Upgrader{
-	ReadBufferSize:  1024,
-	WriteBufferSize: 1024,
-}
+var (
+	upgrader = websocket.Upgrader{
+		ReadBufferSize:  1024,
+		WriteBufferSize: 1024,
+	}
+	uid = 0
+)
 
 func main() {
 	//Static Files
@@ -23,13 +26,14 @@ func main() {
 	worlds["test1"] = server.CreateWorld()
 	go worlds["test1"].Run()
 	http.HandleFunc("/test1", func(w http.ResponseWriter, r *http.Request) {
-		log.Println("Client connected to world 1")
+		log.Println("Client [", uid, "]connected to world 1")
 		serveWs(worlds["test1"], w, r)
+		uid++
 	})
 	worlds["test2"] = server.CreateWorld()
 	go worlds["test2"].Run()
 	http.HandleFunc("/test2", func(w http.ResponseWriter, r *http.Request) {
-		log.Println("Client connected to world 1")
+		log.Println("Client connected to world 2")
 		serveWs(worlds["test2"], w, r)
 	})
 	//Serve and Run Worlds
