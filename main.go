@@ -33,7 +33,7 @@ func main() {
 	worlds["test2"] = server.CreateWorld()
 	go worlds["test2"].Run()
 	http.HandleFunc("/test2", func(w http.ResponseWriter, r *http.Request) {
-		log.Println("Client [ 1 /", uid, "] connected to world 1")
+		log.Println("Client [", GetIP(r), "] [ 1 /", uid, "] connected to world 2")
 		serveWs(worlds["test2"], w, r)
 	})
 	//Serve and Run Worlds
