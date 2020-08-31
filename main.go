@@ -9,13 +9,7 @@ import (
 )
 
 func main() {
-	//Set Port
-	port := "8080"
-	log.Println("Server started at", port)
 
-	//Serve Static Files
-	http.Handle("/", http.FileServer(http.Dir("webroot")))
-	log.Fatal(http.ListenAndServe(":"+port, nil))
 	//Process Request
 	reqString := `{"method":"play"}`
 	var req server.Request
@@ -34,5 +28,11 @@ func main() {
 		log.Println("Convert response to json:", err)
 	}
 	log.Println("Response->", string(respRaw))
+	//Set Port
+	port := "8080"
+	log.Println("Server started at", port)
 
+	//Serve Static Files
+	http.Handle("/", http.FileServer(http.Dir("webroot")))
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
