@@ -23,11 +23,13 @@ func main() {
 	worlds["test1"] = server.CreateWorld()
 	go worlds["test1"].Run()
 	http.HandleFunc("/test1", func(w http.ResponseWriter, r *http.Request) {
+		log.Println("Client connected to world 1")
 		serveWs(worlds["test1"], w, r)
 	})
 	worlds["test2"] = server.CreateWorld()
 	go worlds["test2"].Run()
 	http.HandleFunc("/test2", func(w http.ResponseWriter, r *http.Request) {
+		log.Println("Client connected to world 1")
 		serveWs(worlds["test2"], w, r)
 	})
 	//Serve and Run Worlds
