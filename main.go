@@ -14,7 +14,7 @@ var (
 		ReadBufferSize:  1024,
 		WriteBufferSize: 1024,
 	}
-	uid = 0
+	uid = 1
 )
 
 func main() {
