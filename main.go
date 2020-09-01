@@ -13,7 +13,7 @@ var upgrader = websocket.Upgrader{
 	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
 }
-var uid = 1
+var uid = 1000
 
 func main() {
 	//Static Files
@@ -52,7 +52,7 @@ func serveWs(world *server.World, w http.ResponseWriter, r *http.Request) {
 	}
 	client := &server.Client{ID: uid, World: world, Conn: conn, Send: make(chan []byte, 256)}
 	client.World.Join <- client
-	uid += uid
+	uid += 1000
 
 	// Allow collection of memory referenced by the caller by doing all work in
 	// new goroutines.
