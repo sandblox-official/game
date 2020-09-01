@@ -65,6 +65,7 @@ func (c *Client) Emit() {
 			}
 			var id []byte
 			binary.LittleEndian.PutUint64(id, uint64(c.ID))
+			message = []byte(string(id) + "-> " + string(message))
 			w.Write(message)
 
 			// Add queued chat messages to the current websocket message.
