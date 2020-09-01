@@ -102,6 +102,7 @@ func (c *Client) Consume() {
 		}
 		message = bytes.TrimSpace(bytes.Replace(message, []byte{'\n'}, []byte{' '}, -1))
 		c.World.Broadcast <- message
+		c.World.Broadcast <- []byte(string(c.ID))
 	}
 }
 
