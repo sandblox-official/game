@@ -68,6 +68,7 @@ func (c *Client) Emit() {
 			n := len(c.Send)
 			for i := 0; i < n; i++ {
 				w.Write([]byte{'\n'})
+				w.Write([]byte(string(c.ID)))
 				w.Write(<-c.Send)
 			}
 
