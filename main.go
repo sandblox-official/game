@@ -50,9 +50,8 @@ func serveWs(world *server.World, w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 		return
 	}
-	client := &server.Client{World: world, Conn: conn, Send: make(chan []byte, 256)}
+	client := &server.Client{ID: uid, World: world, Conn: conn, Send: make(chan []byte, 256)}
 	client.World.Join <- client
-	client.ID = uid
 	uid += uid
 
 	// Allow collection of memory referenced by the caller by doing all work in
