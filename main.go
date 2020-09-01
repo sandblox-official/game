@@ -36,6 +36,7 @@ func main() {
 				log.Println("Client [", ip, "] [ 1 /", uid, "] connected to world 1")
 				serveWs(worlds["test1"], w, r)
 				uid++
+				activeIPs = append(activeIPs, ip)
 			}
 		}
 	})
@@ -51,6 +52,7 @@ func main() {
 				log.Println("Client [", ip, "] [ 1 /", uid, "] connected to world 2")
 				serveWs(worlds["test2"], w, r)
 				uid++
+				activeIPs = append(activeIPs, ip)
 			}
 		}
 	})
