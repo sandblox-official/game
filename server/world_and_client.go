@@ -3,6 +3,7 @@ package server
 import (
 	"bytes"
 	"log"
+	"strconv"
 	"time"
 
 	"github.com/gorilla/websocket"
@@ -62,7 +63,7 @@ func (c *Client) Emit() {
 			if err != nil {
 				return
 			}
-			w.Write(message)
+			w.Write([]byte(string([]byte(strconv.Itoa(c.ID)) + message)))
 
 			// Add queued chat messages to the current websocket message.
 			n := len(c.Send)
@@ -102,7 +103,6 @@ func (c *Client) Consume() {
 		}
 		message = bytes.TrimSpace(bytes.Replace(message, []byte{'\n'}, []byte{' '}, -1))
 		c.World.Broadcast <- message
-		c.World.Broadcast <- []byte(string(c.ID))
 	}
 }
 
