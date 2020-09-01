@@ -62,7 +62,7 @@ func (c *Client) Emit() {
 			if err != nil {
 				return
 			}
-			w.Write([]byte("7") + message)
+			w.Write(message)
 
 			// Add queued chat messages to the current websocket message.
 			n := len(c.Send)
