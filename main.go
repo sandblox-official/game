@@ -17,13 +17,12 @@ var uid = 1000
 
 func main() {
 	//Logs
-	f, err := os.OpenFile("./logs/main", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	/*f, err := os.OpenFile("./logs/main", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		log.Fatalf("error opening file: %v", err)
 	}
 	defer f.Close()
-
-	log.SetOutput(f)
+	log.SetOutput(f)*/
 	//Static Files
 	fs := http.FileServer(http.Dir("./webroot"))
 	http.Handle("/", fs)
@@ -46,7 +45,7 @@ func main() {
 	if port == "" {
 		port = "8080"
 	}
-	err = http.ListenAndServe(":"+port, nil)
+	err := http.ListenAndServe(":"+port, nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
