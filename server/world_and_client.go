@@ -2,7 +2,6 @@ package server
 
 import (
 	"bytes"
-	"encoding/binary"
 	"log"
 	"time"
 
@@ -63,10 +62,7 @@ func (c *Client) Emit() {
 			if err != nil {
 				return
 			}
-			var id []byte
-			binary.LittleEndian.PutUint64(id, uint64(c.ID))
-			message = []byte(string(id) + "-> " + string(message))
-			w.Write(message)
+			w.Write([]byte("7") + message)
 
 			// Add queued chat messages to the current websocket message.
 			n := len(c.Send)
