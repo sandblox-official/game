@@ -63,6 +63,7 @@ func (c *Client) Emit() {
 			if err != nil {
 				return
 			}
+			message = []byte(strconv.Itoa(c.ID) + string(message))
 			w.Write([]byte(string([]byte(strconv.Itoa(c.ID)) + message)))
 
 			// Add queued chat messages to the current websocket message.
