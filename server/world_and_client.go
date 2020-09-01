@@ -63,7 +63,6 @@ func (c *Client) Emit() {
 			if err != nil {
 				return
 			}
-			message = []byte(strconv.Itoa(c.ID) + "->" + string(message))
 			w.Write(message)
 
 			// Add queued chat messages to the current websocket message.
@@ -103,6 +102,7 @@ func (c *Client) Consume() {
 			break
 		}
 		message = bytes.TrimSpace(bytes.Replace(message, []byte{'\n'}, []byte{' '}, -1))
+		message = []byte(strconv.Itoa(c.ID) + "->" + string(message))
 		c.World.Broadcast <- message
 	}
 }
