@@ -34,9 +34,6 @@ func (inPacket *Packet) GetOutputPacket() Packet {
 	case "move":
 		outPacket.Method = "move"
 		outPacket.Data.Player = inPacket.Data.Player
-		outPacket.Data.Player.X = inPacket.Data.Player.X
-		outPacket.Data.Player.Y = inPacket.Data.Player.Y
-		outPacket.Data.Player.Z = inPacket.Data.Player.Z
 		return *outPacket
 	case "message":
 		outPacket.Data.Chat = inPacket.Data.Chat
