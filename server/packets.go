@@ -29,19 +29,20 @@ type Chat struct {
 
 //GetOutputPacket takes an input to generate an output
 func (inPacket *Packet) GetOutputPacket() Packet {
+	outPacket := &Packet{}
 	switch inPacket.Method {
 	case "move":
-		outPacket := &Packet{}
 		outPacket.Method = "move"
 		outPacket.Data.Player = inPacket.Data.Player
 		outPacket.Data.Player.X = inPacket.Data.Player.X
 		outPacket.Data.Player.Y = inPacket.Data.Player.Y
 		outPacket.Data.Player.Z = inPacket.Data.Player.Z
 		return *outPacket
+	case "message":
+		outPacket.Data.Chat = inPacket.Data.Chat
+		return *outPacket
+	}
 
-	}
-	errPacket := &Packet{
-		Method: "error",
-	}
-	return *errPacket
+	outPacket.Method = "error"
+	return *outPacket
 }
