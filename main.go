@@ -9,14 +9,10 @@ import (
 	"github.com/sandblox-official/game/server"
 )
 
-var (
-	upgrader = websocket.Upgrader{
-		ReadBufferSize:  1024,
-		WriteBufferSize: 1024,
-	}
-	uid       = 1
-	activeIPs = []string{}
-)
+var upgrader = websocket.Upgrader{
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024,
+}
 
 func main() {
 	//Static Files
@@ -27,34 +23,14 @@ func main() {
 	worlds["test1"] = server.CreateWorld()
 	go worlds["test1"].Run()
 	http.HandleFunc("/test1", func(w http.ResponseWriter, r *http.Request) {
-		ip := GetIP(r)
-		for _, tmpIP := range activeIPs {
-			if tmpIP == ip {
-				log.Println("Client", ip, "'s connection has been rejected")
-				w.Write([]byte("IP Already in use"))
-			} else {
-				log.Println("Client [", ip, "] [ 1 /", uid, "] connected to world 1")
-				serveWs(worlds["test1"], w, r)
-				uid++
-				activeIPs = append(activeIPs, ip)
-			}
-		}
+		log.Println("Client connected to world 1")
+		serveWs(worlds["test1"], w, r)
 	})
 	worlds["test2"] = server.CreateWorld()
 	go worlds["test2"].Run()
 	http.HandleFunc("/test2", func(w http.ResponseWriter, r *http.Request) {
-		ip := GetIP(r)
-		for _, tmpIP := range activeIPs {
-			if tmpIP == ip {
-				log.Println("Client", ip, "'s connection has been rejected")
-				w.Write([]byte("IP Already in use"))
-			} else {
-				log.Println("Client [", ip, "] [ 1 /", uid, "] connected to world 2")
-				serveWs(worlds["test2"], w, r)
-				uid++
-				activeIPs = append(activeIPs, ip)
-			}
-		}
+		log.Println("Client connected to world 2")
+		serveWs(worlds["test2"], w, r)
 	})
 	//Serve and Run Worlds
 	port := os.Getenv("PORT")
@@ -81,11 +57,4 @@ func serveWs(world *server.World, w http.ResponseWriter, r *http.Request) {
 	go client.Emit()
 	go client.Consume()
 
-}
-func GetIP(r *http.Request) string {
-	forwarded := r.Header.Get("X-FORWARDED-FOR")
-	if forwarded != "" {
-		return forwarded
-	}
-	return r.RemoteAddr
 }
